@@ -13,14 +13,15 @@ namespace HelloWorldSvc.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new string[] { "hello", "world" };
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
-            return "value";
+            bool odd = (id % 2) != 0;
+            return odd ? "hello" : "world";
         }
 
         // POST api/values
