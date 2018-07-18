@@ -1,13 +1,19 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.IO;
+using Microsoft.Extensions.Configuration;
+using HelloWorldSvc.Controllers;
 
-namespace HelloWorldSvc.Test
+namespace HelloWorldSvc.test
 {
     [TestClass]
-    public class UnitTest1
+    public class BasicTest
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestController()
         {
+            var controller = new ValuesController();
+            var result = controller.Get(2);
+            Assert.AreEqual("world", result);
         }
     }
 }
