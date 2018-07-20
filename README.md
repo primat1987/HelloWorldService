@@ -1,6 +1,7 @@
 ## Template Overview
 
 Hello World Service is created to be a blueprint for creating microservices in .NET Core.
+[![Build Status](https://travis-ci.org/EthosLending/HelloWorldService.svg?branch=master)](https://travis-ci.org/EthosLending/HelloWorldService)
 
 ## Synopsis
 
