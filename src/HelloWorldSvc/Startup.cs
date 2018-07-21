@@ -23,7 +23,42 @@ namespace HelloWorldSvc
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            // Register swagger and MVC services
+            services
+                .AddSwaggerGen(config =>
+                {
+                    config.SwaggerDoc(
+                        "v1",
+                        new Swashbuckle.AspNetCore.Swagger.Info
+                        {
+                            Title = "Hello World API",
+                            Version = "v1"
+                        });
+                    config.UseReferencedDefinitionsForEnums();
+                })
+                .AddMvc()
+                .AddJsonOptions(opt =>
+                {
+                    // Setting this to AUTO is required to ensure that derived types
+                    // are serialized and deserialized properly.  Otherwise only the base
+                    // type (the declared type - normally the base type) ends up being
+                    // deserialized.  This MUST be done on both the calling and recieving
+                    // end to ensure it works properly.                
+                    opt.SerializerSettings.TypeNameHandling = Newtonsoft.Json.TypeNameHandling.Auto;
+                    opt.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
+
+                })
+                .AddControllersAsServices();
+
+            // Add API Versioning
+            services.AddApiVersioning(opt =>
+            {
+                opt.AssumeDefaultVersionWhenUnspecified = true;
+                opt.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
+                opt.ReportApiVersions = true;
+            });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,6 +70,11 @@ namespace HelloWorldSvc
             }
 
             app.UseMvc();
+            app.UseSwagger();
+            app.UseSwaggerUI(config =>
+            {
+                config.SwaggerEndpoint("/swagger/v1/swagger.json", "Hello World API v1");
+            });
         }
     }
 }

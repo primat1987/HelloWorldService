@@ -26,7 +26,7 @@ namespace HelloWorldSvc.Test
         [TestMethod]
         public async Task TesValuesGet()
         {
-            var response = await _client.GetAsync("/api/values/");
+            var response = await _client.GetAsync("/api/v1/values/");
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
             var resultBody = await response.Content.ReadAsStringAsync();
             Assert.IsTrue(resultBody.Contains("world"));
